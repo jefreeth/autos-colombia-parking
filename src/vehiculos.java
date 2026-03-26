@@ -1,9 +1,9 @@
-public class vehiculos {
+public class Vehiculos {
     String placa;
     String modelo;
     String color;
     
-public vehiculos(String placa, String modelo, String color){
+public Vehiculos(String placa, String modelo, String color){
     this.placa = placa;
     this.modelo = modelo;
     this.color = color;

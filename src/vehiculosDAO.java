@@ -3,13 +3,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class vehiculosDAO {
+public class VehiculosDAO {
 
-    public void registrarVehiculo(vehiculos vehiculo){
+    public void registrarVehiculo(Vehiculos vehiculo){
         String sql = "INSERT INTO vehiculos (placa, modelo, color) VALUES (?,?,?)";
 
         try{
-            Connection conexion = conexionBD.obtenerConexion();
+            Connection conexion = ConexionBD.obtenerConexion();
 
             PreparedStatement statement = conexion.prepareStatement(sql);
 
