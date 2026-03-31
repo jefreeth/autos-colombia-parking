@@ -1,20 +1,23 @@
 import java.time.LocalDateTime;
 
 public class Registro {
-    int idRegistro;
-    String placaEntrada;
-    LocalDateTime horaEntrada;
-    LocalDateTime horaSalida;
-    String estado;
+    private int idRegistro;
+    private String idPlaca;
+    private LocalDateTime horaEntrada;
+    private LocalDateTime horaSalida;
+    private String estado;
+    private int idCelda;
+
+public Registro(){};
 
 
-public Registro(int idRegistro, String placaEntrada, LocalDateTime horaEntrada, LocalDateTime horaSalida, String estado){
+public Registro(int idRegistro, String idPlaca, LocalDateTime horaEntrada, LocalDateTime horaSalida, String estado, int idCelda){
     this.idRegistro = idRegistro;
-    this.placaEntrada = placaEntrada;      
+    this.idPlaca = idPlaca;      
     this.horaEntrada = horaEntrada;
     this.horaSalida = horaSalida;
     this.estado = estado;
-
+    this.idCelda = idCelda;
 }
 
 
@@ -28,13 +31,13 @@ public void setIdRegistro(int idRegistro) {
 }
 
 
-public String getPlacaEntrada() {
-    return placaEntrada;
+public String getidPlaca() {
+    return idPlaca;
 }
 
 
-public void setPlacaEntrada(String placaEntrada) {
-    this.placaEntrada = placaEntrada;
+public void setidPlaca(String idPlaca) {
+    this.idPlaca = idPlaca;
 }
 
 
@@ -67,6 +70,13 @@ public void setEstado(String estado) {
     this.estado = estado;
 }
 
+public int getidCelda() {
+    return idCelda;
+}
+
+public void setIdCelda(int idCelda){
+    this.idCelda = idCelda;
+}
 
 }
 

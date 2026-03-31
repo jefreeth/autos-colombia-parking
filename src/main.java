@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalDate;
 
 
 public class Main {
@@ -51,11 +52,75 @@ public class Main {
                 case 3:
                     System.out.println("ingrese placa del vehiculo");
                     String placaSalida = sc.nextLine();
-
                     RegistrosDAO registrosDAO2 = new RegistrosDAO();
-                    registrosDAO2.registrarSalida(placaSalida);
 
-                    break;
+                    Registro registro = registrosDAO2.obtenerRegistroPlaca(placaSalida);
+
+                    if(registro == null){
+                        System.out.println("el vehiuclo no esta dentro del parqueadero");
+                        break;
+                    }
+
+                    registrosDAO2.registrarSalida(placaSalida);
+                    registro = registrosDAO2.obtenerRegistroPlaca(placaSalida);
+
+                    OperacionPago operacionPago = new OperacionPago();
+
+                    //generar factura
+                    if(registro != null){
+                       
+
+                        System.out.println("seleccione el metodo de pago");
+                        System.out.println("1, efectivo");
+                        System.out.println("2, trasnferencia");
+
+                        int metodo = sc.nextInt();
+                        sc.nextLine();
+
+                        Pagos pago = null;
+
+                        switch (metodo) {
+                            case 1: 
+                            pago = operacionPago.guardarMonto(registro, "efectivo");
+
+                            System.out.println("monto a pagar: " + pago.getMonto());
+                            System.out.println("se realizo el pago en efectivo");
+
+                            break;
+
+                            case 2:
+                                System.out.println("numero de cuetna: 123-456-789");
+
+                                System.out.println("¿confirmar pago en trasnferencia?");
+                                String confirmacion = sc.nextLine();
+
+                                if(confirmacion.equalsIgnoreCase("si")){
+                                    pago = operacionPago.guardarMonto(registro, "trasnferencia");
+                                    System.out.println("monto a pagar: " + pago.getMonto());
+                                    System.out.println("se realizo el pago en trasnferencia");
+
+                                }else{
+                                    System.out.println("pago cancelado");
+                                    break;
+                                }
+                            break;
+                            default:
+                                System.out.println("metodo invalido");
+                                break;
+                        }
+                        //generar factura 
+                        if(pago != null){
+                            OperacionPago opPago = new OperacionPago();
+                            long horas = opPago.calcularTotalHoras(registro);
+                            Facturas factura = new Facturas(0, pago.getIdPago(), LocalDate.now(), horas, pago.getMonto(), pago.getMonto());
+                            factura.mostrarFactura(registro, pago);
+
+                            CeldasDAO celdasDAO = new CeldasDAO();
+                            celdasDAO.liberarCelda(registro.getidCelda());
+                        }
+                    }
+
+                 break;
                 
                     //menu de usuarios
                 
@@ -120,7 +185,7 @@ public class Main {
 
             }
 
-        }while(opcion != 3);
+        }while(opcion != 5);
         sc.close();
         
     }
